@@ -371,7 +371,7 @@ export default function About() {
                   B.S. Information Systems
                 </h4>
                 <div className="text-sm text-cyber-cyan font-bold mt-0.5 font-heading">
-                  Sriwijaya University — GPA 3.94
+                  Sriwijaya University — GPA 3.95
                 </div>
                 <div className="text-[10px] font-mono font-bold text-text-muted mt-1 uppercase tracking-wider bg-navy-950/60 px-2 py-0.5 rounded w-fit">
                   2022 - 2026

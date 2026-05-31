@@ -262,7 +262,7 @@ export default function Hero() {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 text-cyber-cyan text-xs font-semibold tracking-wider uppercase mb-6 w-fit font-heading opacity-0"
           >
             <span className="w-2 h-2 rounded-full bg-cyber-cyan animate-pulse"></span>
-            Available for Internships & Projects
+            Available for Full-time & Projects
           </div>
 
           {/* Headline */}
@@ -307,7 +307,7 @@ export default function Hero() {
           {/* Micro Stats / Badges */}
           <div className="mt-12 pt-8 border-t border-navy-800/60 grid grid-cols-3 gap-6 max-w-md text-left">
             <div className="flex flex-col">
-              <span className="text-2xl font-bold font-heading text-cyber-cyan">3.94</span>
+              <span className="text-2xl font-bold font-heading text-cyber-cyan">3.95</span>
               <span className="text-xs text-text-muted mt-1 uppercase tracking-wider">GPA (IS Degree)</span>
             </div>
             <div className="flex flex-col">

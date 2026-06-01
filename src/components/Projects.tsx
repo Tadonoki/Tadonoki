@@ -34,7 +34,7 @@ export default function Projects() {
       title: "Analisis Kinerja Penjualan iPhone SE 2022 di Indonesia (2023–2025) dengan menggunakan Power BI",
       category: "Power BI",
       tags: ["Power BI", "Dashboard", "Sales Analysis"],
-      image: "/images/assets/project1.jpg",
+      image: "/images/assets/PROJECT1.jpg",
       desc: "Analyzed iPhone SE 2022 sales performance in Indonesia (2023–2025) using Power BI. Built an interactive dashboard to explore sales trends, regional performance, and customer segmentation, providing insights to support data-driven business decisions.",
       stats: ["1+ Reports", "15,500+ Records"],
       articleUrl: "https://medium.com/@khailanilupi2005/analisis-kinerja-penjualan-iphone-se-2022-di-indonesia-2023-2025-dengan-menggunakan-power-bi-7a07c5785fbc",

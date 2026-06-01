@@ -62,16 +62,7 @@ export default function Home() {
           {/* Unified Constellation HUD Grid */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff01_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-[size:5rem_5rem] pointer-events-none select-none z-0"></div>
 
-          {/* Unified Subtle Particle Background spanning all wrapped sections */}
-          <ParticleBackground
-            count={55}
-            speedMultiplier={0.2}
-            minSize={0.4}
-            maxSize={1.5}
-            colors={["#ffffff", "#38bdf8", "#00f0ff", "#1e3a8a"]}
-            twinkle={true}
-            drift={true}
-          />
+
 
           <Skills />
           <Experience />

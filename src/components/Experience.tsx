@@ -59,107 +59,75 @@ export default function Experience() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const isMobile = window.innerWidth < 768;
+
     // GSAP Context with scope
     const ctx = gsap.context(() => {
-      // 1. Scrub Timeline Line growing top-to-bottom
-      if (activeLineRef.current && timelineRef.current) {
-        gsap.fromTo(
-          activeLineRef.current,
-          { height: "0%" },
-          {
-            height: "100%",
-            ease: "none",
-            scrollTrigger: {
-              trigger: timelineRef.current,
-              start: "top 80%",
-              end: "bottom 70%",
-              scrub: true,
-            },
-          }
-        );
-      }
+      if (isMobile) {
+        // Mobile: Bypass all ScrollTriggers completely for instant, lag-free load
+        if (activeLineRef.current) gsap.set(activeLineRef.current, { height: "100%" });
+        if (timelineRef.current) {
+          const cards = timelineRef.current.querySelectorAll(".timeline-card-wrapper");
+          const imgWrappers = timelineRef.current.querySelectorAll(".timeline-img-wrapper");
+          const dots = timelineRef.current.querySelectorAll(".timeline-dot");
+          const imgs = timelineRef.current.querySelectorAll(".exp-img");
 
-      // 2. Reveal animations on scroll
-      if (timelineRef.current) {
-        const items = timelineRef.current.querySelectorAll(".timeline-item");
-        items.forEach((item) => {
-          const card = item.querySelector(".timeline-card-wrapper");
-          const imgWrapper = item.querySelector(".timeline-img-wrapper");
-          const dot = item.querySelector(".timeline-dot");
-          const img = item.querySelector(".exp-img");
-
-          // Card entrance fade-up
+          gsap.set(cards, { opacity: 1, y: 0 });
+          gsap.set(imgWrappers, { opacity: 1, y: 0, scale: 1 });
+          gsap.set(dots, { opacity: 1, scale: 1 });
+          gsap.set(imgs, { clipPath: "inset(0 0% 0 0)", scale: 1 });
+        }
+      } else {
+        // Desktop: High performance timeline growing scroll line
+        if (activeLineRef.current && timelineRef.current) {
           gsap.fromTo(
-            card,
-            { y: 50, opacity: 0 },
+            activeLineRef.current,
+            { height: "0%" },
             {
-              y: 0,
-              opacity: 1,
-              duration: 0.8,
-              ease: "power3.out",
+              height: "100%",
+              ease: "none",
+              scrollTrigger: {
+                trigger: timelineRef.current,
+                start: "top 80%",
+                end: "bottom 70%",
+                scrub: true,
+              },
+            }
+          );
+        }
+
+        // Desktop: Group and batch animation triggers (1 ScrollTrigger per item)
+        if (timelineRef.current) {
+          const items = timelineRef.current.querySelectorAll(".timeline-item");
+          items.forEach((item) => {
+            const card = item.querySelector(".timeline-card-wrapper");
+            const imgWrapper = item.querySelector(".timeline-img-wrapper");
+            const dot = item.querySelector(".timeline-dot");
+            const img = item.querySelector(".exp-img");
+
+            const itemTl = gsap.timeline({
               scrollTrigger: {
                 trigger: item,
                 start: "top 85%",
                 toggleActions: "play none none none",
-              },
-            }
-          );
-
-          // Image wrapper entrance: scale and fade-up
-          gsap.fromTo(
-            imgWrapper,
-            { y: 50, opacity: 0, scale: 0.96 },
-            {
-              y: 0,
-              opacity: 1,
-              scale: 1,
-              duration: 0.9,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: item,
-                start: "top 85%",
-                toggleActions: "play none none none",
-              },
-            }
-          );
-
-          // Dot pop-in
-          gsap.fromTo(
-            dot,
-            { scale: 0, opacity: 0 },
-            {
-              scale: 1,
-              opacity: 1,
-              duration: 0.5,
-              ease: "back.out(1.8)",
-              scrollTrigger: {
-                trigger: item,
-                start: "top 85%",
-                toggleActions: "play none none none",
-              },
-            }
-          );
-
-          // Clip-path image horizontal reveal and subtle zoom-out
-          if (img) {
-            gsap.fromTo(
-              img,
-              { clipPath: "inset(0 100% 0 0)", scale: 1.15 },
-              {
-                clipPath: "inset(0 0% 0 0)",
-                scale: 1,
-                duration: 1.0,
-                delay: 0.2,
-                ease: "power3.out",
-                scrollTrigger: {
-                  trigger: item,
-                  start: "top 85%",
-                  toggleActions: "play none none none",
-                },
               }
-            );
-          }
-        });
+            });
+
+            itemTl
+              .fromTo(dot, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.5)" })
+              .fromTo(card, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, "-=0.3")
+              .fromTo(imgWrapper, { y: 30, opacity: 0, scale: 0.97 }, { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }, "-=0.5");
+
+            if (img) {
+              itemTl.fromTo(
+                img,
+                { clipPath: "inset(0 100% 0 0)", scale: 1.12 },
+                { clipPath: "inset(0 0% 0 0)", scale: 1, duration: 0.8, ease: "power3.out" },
+                "-=0.5"
+              );
+            }
+          });
+        }
       }
     }, containerRef);
 

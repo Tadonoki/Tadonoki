@@ -111,28 +111,58 @@ export default function Skills() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const isMobile = window.innerWidth < 768;
+
     const ctx = gsap.context(() => {
       if (cardContainerRef.current) {
         const cards = cardContainerRef.current.children;
-        gsap.fromTo(
-          cards,
-          { opacity: 0, scale: 0.95, y: 25 },
-          { opacity: 1, scale: 1, y: 0, duration: 0.5, stagger: 0.1, ease: "power3.out" }
-        );
-
         const progressBars = cardContainerRef.current.querySelectorAll(".skill-progress-bar");
-        progressBars.forEach((bar) => {
-          const val = bar.getAttribute("data-value") || "0%";
+
+        if (isMobile) {
+          // Instantly show final states on mobile to achieve perfect performance
+          gsap.set(cards, { opacity: 1, scale: 1, y: 0 });
+          progressBars.forEach((bar) => {
+            const val = bar.getAttribute("data-value") || "0%";
+            gsap.set(bar, { width: val });
+          });
+        } else {
+          // Desktop: run high-performance transform-only animations on ScrollTrigger
           gsap.fromTo(
-            bar,
-            { width: "0%" },
+            cards,
+            { opacity: 0, scale: 0.96, y: 20 },
             {
-              width: val,
-              duration: 1.5,
-              ease: "power2.out",
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              duration: 0.5,
+              stagger: 0.08,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: cardContainerRef.current,
+                start: "top 85%",
+                toggleActions: "play none none none",
+              }
             }
           );
-        });
+
+          progressBars.forEach((bar) => {
+            const val = bar.getAttribute("data-value") || "0%";
+            gsap.fromTo(
+              bar,
+              { width: "0%" },
+              {
+                width: val,
+                duration: 1.2,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: bar,
+                  start: "top 90%",
+                  toggleActions: "play none none none",
+                }
+              }
+            );
+          });
+        }
       }
     }, containerRef);
 

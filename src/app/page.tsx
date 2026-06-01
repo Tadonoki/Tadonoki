@@ -6,12 +6,28 @@ import Preloader from "@/components/Preloader";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import Skills from "@/components/Skills";
-import Experience from "@/components/Experience";
-import Projects from "@/components/Projects";
-import WebApps from "@/components/WebApps";
 import Footer from "@/components/Footer";
-import ParticleBackground from "@/components/ParticleBackground";
+
+// Dynamically load ALL below-the-fold components to maximize Lighthouse performance score (eliminates render-blocking & legacy JS weight)
+const Skills = dynamic(() => import("@/components/Skills"), {
+  ssr: false,
+  loading: () => <div className="min-h-[250px] flex items-center justify-center text-text-muted font-mono text-xs">Loading Technical Skills...</div>
+});
+
+const Experience = dynamic(() => import("@/components/Experience"), {
+  ssr: false,
+  loading: () => <div className="min-h-[250px] flex items-center justify-center text-text-muted font-mono text-xs">Loading Technical Experience...</div>
+});
+
+const Projects = dynamic(() => import("@/components/Projects"), {
+  ssr: false,
+  loading: () => <div className="min-h-[300px] flex items-center justify-center text-text-muted font-mono text-xs">Loading Projects...</div>
+});
+
+const WebApps = dynamic(() => import("@/components/WebApps"), {
+  ssr: false,
+  loading: () => <div className="min-h-[250px] flex items-center justify-center text-text-muted font-mono text-xs">Loading Web Applications...</div>
+});
 
 // Dynamically load heavy client-only/animation-heavy components for dramatic Lighthouse performance gain
 const DataPlayground = dynamic(() => import("@/components/DataPlayground"), {

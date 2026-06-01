@@ -36,8 +36,20 @@ export default function ParticleBackground({
 }: ParticleBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = React.useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
     if (typeof window === "undefined") return;
 
     const canvas = canvasRef.current;
@@ -74,8 +86,7 @@ export default function ParticleBackground({
       initParticles();
     };
 
-    const isMobile = window.innerWidth < 768;
-    const activeCount = isMobile ? Math.max(5, Math.round(count * 0.25)) : count;
+    const activeCount = count;
 
     const initParticles = () => {
       particles = [];
@@ -191,14 +202,14 @@ export default function ParticleBackground({
       cancelAnimationFrame(animationFrameId);
       observer.disconnect();
     };
-  }, [count, speedMultiplier, minSize, maxSize, colors, twinkle, drift]);
+  }, [count, speedMultiplier, minSize, maxSize, colors, twinkle, drift, isMobile]);
 
   return (
     <div
       ref={containerRef}
       className="absolute inset-0 w-full h-full pointer-events-none select-none z-[1] overflow-hidden"
     >
-      <canvas ref={canvasRef} className="absolute inset-0 block w-full h-full" />
+      {!isMobile && <canvas ref={canvasRef} className="absolute inset-0 block w-full h-full" />}
     </div>
   );
 }

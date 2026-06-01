@@ -18,11 +18,23 @@ export default function Hero() {
   const dotsRef = useRef<HTMLDivElement>(null);
 
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const slides = [
     "/images/assets/tadoo.png",
     "/images/assets/tadoo1.png",
     "/images/assets/tadoo2.png",
   ];
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const checkMobile = () => {
+        setIsMobile(window.innerWidth < 1024);
+      };
+      checkMobile();
+      window.addEventListener("resize", checkMobile);
+      return () => window.removeEventListener("resize", checkMobile);
+    }
+  }, []);
 
   // Carousel auto-slide
   useEffect(() => {
@@ -35,6 +47,8 @@ export default function Hero() {
   // Entrance Animations & Idle Loop
   useEffect(() => {
     if (typeof window === "undefined") return;
+
+    const isMobile = window.innerWidth < 1024;
 
     // GSAP Context with Scope
     const ctx = gsap.context(() => {
@@ -101,57 +115,67 @@ export default function Hero() {
         );
       }
 
-      // 3. Drop-in entrance for the badge parallax container
-      entranceTl.fromTo(
-        badgeParallaxRef.current,
-        { y: -650, rotation: -12, opacity: 0 },
-        { 
-          y: 0, 
-          rotation: 0, 
-          opacity: 1, 
-          duration: 1.4, 
-          ease: "elastic.out(0.8, 0.65)" 
-        },
-        "-=0.6"
-      );
+      if (isMobile) {
+        // Mobile only simple lightweight fade in for badge
+        gsap.fromTo(
+          badgeParallaxRef.current,
+          { opacity: 0, scale: 0.95 },
+          { opacity: 1, scale: 1, duration: 0.8, ease: "power2.out" }
+        );
+        gsap.set(badgeIdleRef.current, { y: 0, rotation: 0 });
+      } else {
+        // 3. Drop-in entrance for the badge parallax container
+        entranceTl.fromTo(
+          badgeParallaxRef.current,
+          { y: -650, rotation: -12, opacity: 0 },
+          { 
+            y: 0, 
+            rotation: 0, 
+            opacity: 1, 
+            duration: 1.4, 
+            ease: "elastic.out(0.8, 0.65)" 
+          },
+          "-=0.6"
+        );
 
-      // 4. Idle swing + vertical float on the idle container
-      gsap.to(badgeIdleRef.current, {
-        rotation: 1.8,
-        duration: 3.8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        transformOrigin: "50% -120px",
-      });
-
-      gsap.to(badgeIdleRef.current, {
-        y: -12,
-        duration: 2.4,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      // 5. Floating Backdrop Data Particles loop
-      if (dotsRef.current) {
-        const dots = dotsRef.current.children;
-        Array.from(dots).forEach((dot) => {
-          const randomX = gsap.utils.random(-30, 30);
-          const randomY = gsap.utils.random(-40, 40);
-          const randomDur = gsap.utils.random(4, 8);
-          const randomDelay = gsap.utils.random(0, 2);
-
-          gsap.to(dot, {
-            x: `+=${randomX}`,
-            y: `+=${randomY}`,
-            duration: randomDur,
-            delay: randomDelay,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-          });
+        // 4. Idle swing + vertical float on the idle container
+        gsap.to(badgeIdleRef.current, {
+          rotation: 1.8,
+          duration: 3.8,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          transformOrigin: "50% -120px",
         });
+
+        gsap.to(badgeIdleRef.current, {
+          y: -12,
+          duration: 2.4,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+
+        // 5. Floating Backdrop Data Particles loop
+        if (dotsRef.current) {
+          const dots = dotsRef.current.children;
+          Array.from(dots).forEach((dot) => {
+            const randomX = gsap.utils.random(-30, 30);
+            const randomY = gsap.utils.random(-40, 40);
+            const randomDur = gsap.utils.random(4, 8);
+            const randomDelay = gsap.utils.random(0, 2);
+
+            gsap.to(dot, {
+              x: `+=${randomX}`,
+              y: `+=${randomY}`,
+              duration: randomDur,
+              delay: randomDelay,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            });
+          });
+        }
       }
     }, containerRef);
 
@@ -218,7 +242,7 @@ export default function Hero() {
     <section
       id="home"
       ref={containerRef}
-      className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden"
+      className="relative min-h-screen flex items-center pt-36 pb-16 lg:pt-28 lg:pb-16 overflow-hidden"
       style={{ perspective: "1000px", backgroundColor: "#030712" }}
     >
       {/* Space Orbit Launch Backdrop */}
@@ -286,22 +310,22 @@ export default function Hero() {
           </p>
 
           {/* Buttons */}
-          <div ref={btnGroupRef} className="flex flex-wrap gap-4 items-center">
+          <div ref={btnGroupRef} className="flex flex-row flex-wrap sm:flex-nowrap gap-3 sm:gap-4 items-center w-full sm:w-auto">
             <a
               href="/assets/Kgs M Luthfi Khailani_CV.pdf"
               download="Kgs M Luthfi Khailani_CV.pdf"
-              className="px-6 py-3.5 bg-cyber-cyan hover:bg-cyber-cyan/90 text-navy-950 font-bold rounded shadow-lg shadow-cyber-cyan/10 hover:shadow-cyber-cyan/20 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 text-sm uppercase tracking-wider font-heading"
+              className="px-4 py-3 sm:px-6 sm:py-3.5 bg-cyber-cyan hover:bg-cyber-cyan/90 text-navy-950 font-bold rounded shadow-lg shadow-cyber-cyan/10 hover:shadow-cyber-cyan/20 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 text-xs sm:text-sm uppercase tracking-wider font-heading flex-1 sm:flex-none"
             >
               Download CV
-              <Download size={16} />
+              <Download size={14} className="sm:w-4 sm:h-4" />
             </a>
             
             <button
               onClick={handleContactScroll}
-              className="px-6 py-3.5 bg-transparent hover:bg-navy-800 text-text-primary font-semibold rounded border border-navy-700 hover:border-navy-600 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 text-sm uppercase tracking-wider font-heading"
+              className="px-4 py-3 sm:px-6 sm:py-3.5 bg-transparent hover:bg-navy-800 text-text-primary font-semibold rounded border border-navy-700 hover:border-navy-600 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 text-xs sm:text-sm uppercase tracking-wider font-heading flex-1 sm:flex-none"
             >
               Get in Touch
-              <ArrowRight size={16} className="text-cyber-cyan" />
+              <ArrowRight size={14} className="text-cyber-cyan sm:w-4 sm:h-4" />
             </button>
           </div>
 
@@ -324,43 +348,45 @@ export default function Hero() {
 
         {/* Access Badge Lanyard Container Right (Col 5) */}
         <div 
-          className="lg:col-span-5 flex justify-center items-center py-12 relative min-h-[480px]"
+          className="lg:col-span-5 flex justify-center items-center py-6 lg:py-12 relative min-h-[300px] lg:min-h-[480px]"
           style={{ transformStyle: "preserve-3d" }}
         >
           {/* Lanyard Strap SVG */}
-          <svg 
-            className="absolute -top-[120px] left-1/2 -translate-x-1/2 w-48 h-[160px] pointer-events-none z-10 overflow-visible" 
-            viewBox="0 0 200 200"
-          >
-            {/* Hanging Lanyard Cord in Cyber Cyan */}
-            <path 
-              d="M 100 -50 L 60 170 Q 100 200 140 170 Z" 
-              fill="none" 
-              stroke="#06b6d4" 
-              strokeWidth="2.5" 
-              strokeLinecap="round" 
-              opacity="0.5" 
-            />
-            <path 
-              d="M 100 -50 L 60 170 Q 100 200 140 170" 
-              fill="none" 
-              stroke="#64ffda" 
-              strokeWidth="1" 
-              strokeLinecap="round" 
-              opacity="0.8" 
-            />
-            {/* Metallic badge clamp connector */}
-            <circle cx="100" cy="180" r="8" fill="#1e293b" stroke="#64748b" strokeWidth="2.5" />
-            <rect x="94" y="180" width="12" height="18" rx="2" fill="url(#metallicGradient)" stroke="#94a3b8" strokeWidth="1" />
-            
-            <defs>
-              <linearGradient id="metallicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#f1f5f9" />
-                <stop offset="50%" stopColor="#94a3b8" />
-                <stop offset="100%" stopColor="#475569" />
-              </linearGradient>
-            </defs>
-          </svg>
+          {!isMobile && (
+            <svg 
+              className="absolute -top-[120px] left-1/2 -translate-x-1/2 w-48 h-[160px] pointer-events-none z-10 overflow-visible" 
+              viewBox="0 0 200 200"
+            >
+              {/* Hanging Lanyard Cord in Cyber Cyan */}
+              <path 
+                d="M 100 -50 L 60 170 Q 100 200 140 170 Z" 
+                fill="none" 
+                stroke="#06b6d4" 
+                strokeWidth="2.5" 
+                strokeLinecap="round" 
+                opacity="0.5" 
+              />
+              <path 
+                d="M 100 -50 L 60 170 Q 100 200 140 170" 
+                fill="none" 
+                stroke="#64ffda" 
+                strokeWidth="1" 
+                strokeLinecap="round" 
+                opacity="0.8" 
+              />
+              {/* Metallic badge clamp connector */}
+              <circle cx="100" cy="180" r="8" fill="#1e293b" stroke="#64748b" strokeWidth="2.5" />
+              <rect x="94" y="180" width="12" height="18" rx="2" fill="url(#metallicGradient)" stroke="#94a3b8" strokeWidth="1" />
+              
+              <defs>
+                <linearGradient id="metallicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#f1f5f9" />
+                  <stop offset="50%" stopColor="#94a3b8" />
+                  <stop offset="100%" stopColor="#475569" />
+                </linearGradient>
+              </defs>
+            </svg>
+          )}
 
           {/* Badge Outer Parallax Container */}
           <div 
@@ -375,11 +401,13 @@ export default function Hero() {
             >
               {/* Premium Analyst ID access Badge */}
               <div 
-                className="w-[310px] sm:w-[330px] p-5 pt-8 rounded-2xl border border-navy-700/60 bg-navy-900/65 backdrop-blur-lg shadow-2xl relative flex flex-col items-center select-none"
+                className="w-[260px] sm:w-[330px] p-4 sm:p-5 pt-6 sm:pt-8 rounded-2xl border border-navy-700/60 bg-navy-900/65 backdrop-blur-lg shadow-2xl relative flex flex-col items-center select-none"
                 style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden" }}
               >
                 {/* Lanyard punch slot hole visual overlay */}
-                <div className="absolute top-3 left-1/2 -translate-x-1/2 w-8 h-2.5 rounded-full bg-navy-950 border border-navy-800 shadow-inner z-20"></div>
+                {!isMobile && (
+                  <div className="absolute top-3 left-1/2 -translate-x-1/2 w-8 h-2.5 rounded-full bg-navy-950 border border-navy-800 shadow-inner z-20"></div>
+                )}
 
                 {/* ID Header area */}
                 <div className="w-full flex items-center justify-between border-b border-navy-800/60 pb-3 mb-4 text-left">

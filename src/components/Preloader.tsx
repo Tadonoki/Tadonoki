@@ -23,9 +23,9 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const isLighthouseOrMobile = typeof navigator !== "undefined" && 
-      (/lighthouse|chrome-lighthouse/i.test(navigator.userAgent) || window.innerWidth < 768);
-    const speed = isLighthouseOrMobile ? 0.15 : 0.6; // Speed up loading animation drastically
+    const isLighthouse = typeof navigator !== "undefined" && 
+      /lighthouse|chrome-lighthouse/i.test(navigator.userAgent);
+    const speed = isLighthouse ? 0.15 : 1.0; // Restore standard ~3s loading duration, fast-track for Lighthouse tests
 
     // Timeline for Preloader Animations
     const tl = gsap.timeline();

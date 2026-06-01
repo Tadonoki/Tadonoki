@@ -42,6 +42,20 @@ export default function About() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const isMobile = window.innerWidth < 1024;
+
+    if (isMobile) {
+      // Instantly set values and states on mobile
+      gsap.set([leftCardRef.current, rightCardRef.current], { opacity: 1, x: 0, scale: 1 });
+      if (bottomGridRef.current) {
+        gsap.set(bottomGridRef.current.children, { opacity: 1, y: 0 });
+      }
+      if (countProjectsRef.current) countProjectsRef.current.textContent = "8+";
+      if (countToolsRef.current) countToolsRef.current.textContent = "5+";
+      if (countRecordsRef.current) countRecordsRef.current.textContent = "15,500+";
+      return;
+    }
+
     // GSAP Context with scope
     const ctx = gsap.context(() => {
       // 1. Blinking stars loop

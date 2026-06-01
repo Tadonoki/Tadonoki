@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GraduationCap, MapPin, Mail, Terminal, Activity, Compass, Code, Brain } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
+import Image from "next/image";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -230,9 +231,12 @@ export default function About() {
               <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-2 border-r-2 border-cyber-cyan rounded-br"></div>
 
               <div className="relative w-44 h-44 rounded-full overflow-hidden border-2 border-navy-700/80 p-1.5 bg-navy-950">
-                <img
+                <Image
                   src="/images/assets/tadoo1.png"
                   alt="Kgs M Luthfi Khailani Hologram Profile"
+                  width={176}
+                  height={176}
+                  loading="lazy"
                   className="w-full h-full object-cover rounded-full"
                 />
               </div>

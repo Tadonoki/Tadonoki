@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Briefcase, Calendar, MapPin } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
+import Image from "next/image";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -212,9 +213,12 @@ export default function Experience() {
                 {/* Sibling A: Image Column (Always top on mobile, alternating left/right on desktop) */}
                 <div className="timeline-img-wrapper w-full md:w-1/2 px-4 md:px-8 opacity-0">
                   <div className="glass-card rounded-xl border border-navy-800/80 hover:border-cyber-cyan/35 hover:shadow-[0_0_25px_rgba(100,255,218,0.08)] hover:scale-[1.015] transition-all duration-500 overflow-hidden relative aspect-[16/10] sm:aspect-[16/9] md:h-[220px] lg:h-[240px] xl:h-[250px] w-full group shadow-lg">
-                    <img
+                    <Image
                       src={item.image}
                       alt={`${item.role} cover`}
+                      fill
+                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, 500px"
                       className="exp-img w-full h-full object-cover object-center absolute inset-0"
                       style={{ clipPath: "inset(0 100% 0 0)" }}
                     />

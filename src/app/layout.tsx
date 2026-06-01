@@ -1,5 +1,18 @@
 import type { Metadata } from "next";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Luthfi | My Portfolio",
@@ -19,13 +32,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="h-full scroll-smooth antialiased"
+      className={`${inter.variable} ${outfit.variable} h-full scroll-smooth antialiased`}
     >
       <head>
         <link rel="icon" href="/icon.png" type="image/png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;850&display=swap" rel="stylesheet" />
       </head>
       <body className="bg-navy-950 text-slate-100 min-h-full font-sans antialiased">
         {children}

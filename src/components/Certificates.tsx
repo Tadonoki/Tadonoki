@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Award, Eye, X, ZoomIn, ChevronDown, ChevronUp } from "lucide-react";
+import Image from "next/image";
 import ParticleBackground from "./ParticleBackground";
 
 if (typeof window !== "undefined") {
@@ -204,9 +205,12 @@ export default function Certificates() {
                 onClick={() => setSelectedCert(cert)}
                 className="relative aspect-[4/3] w-full overflow-hidden bg-navy-950 border-b border-navy-800/40 cursor-pointer"
               >
-                <img
+                <Image
                   src={cert.thumbImage}
                   alt={cert.title}
+                  fill
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, 380px"
                   className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500"
                 />
                 
@@ -318,10 +322,13 @@ export default function Certificates() {
 
           {/* Certificate Zoom Container */}
           <div className="relative max-w-4xl w-full max-h-[75vh] flex justify-center items-center z-10 mt-12 pointer-events-none">
-            <img
+            <Image
               ref={modalImgRef}
               src={selectedCert.fullImage}
               alt={`${selectedCert.title} - Large Image`}
+              width={1200}
+              height={900}
+              loading="lazy"
               className="max-w-full max-h-[70vh] object-contain rounded-lg border border-navy-850 shadow-2xl pointer-events-auto"
             />
           </div>

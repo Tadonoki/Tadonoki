@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { Download, ArrowRight, BarChart2, Database, Shield } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
+import Image from "next/image";
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -430,9 +431,12 @@ export default function Hero() {
                           currentSlide === idx ? "opacity-100 scale-100 z-10" : "opacity-0 scale-95 z-0"
                         }`}
                       >
-                        <img
+                        <Image
                           src={src}
                           alt={`Luthfi Badge Profile Image ${idx + 1}`}
+                          fill
+                          priority={idx === 0}
+                          sizes="(max-width: 768px) 100vw, 320px"
                           className="w-full h-full object-cover object-center"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-navy-950/70 via-transparent to-transparent"></div>

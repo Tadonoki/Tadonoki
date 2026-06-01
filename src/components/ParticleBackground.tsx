@@ -74,9 +74,12 @@ export default function ParticleBackground({
       initParticles();
     };
 
+    const isMobile = window.innerWidth < 768;
+    const activeCount = isMobile ? Math.max(5, Math.round(count * 0.25)) : count;
+
     const initParticles = () => {
       particles = [];
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < activeCount; i++) {
         const size = Math.random() * (maxSize - minSize) + minSize;
         const color = colors[Math.floor(Math.random() * colors.length)];
         const alpha = Math.random() * 0.6 + 0.2; // Opacity between 0.2 and 0.8

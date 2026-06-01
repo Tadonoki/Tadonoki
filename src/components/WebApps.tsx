@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Database, Sparkles, ShoppingBag, ExternalLink, Globe } from "lucide-react";
+import Image from "next/image";
 import ParticleBackground from "./ParticleBackground";
 
 if (typeof window !== "undefined") {
@@ -124,9 +125,12 @@ export default function WebApps() {
             >
               {/* Card Image Header */}
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-navy-950 border-b border-navy-800/40">
-                <img
+                <Image
                   src={app.image}
                   alt={`${app.name} - Web Application Demonstration Preview`}
+                  fill
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, 380px"
                   className="w-full h-full object-cover object-top group-hover:scale-103 transition-transform duration-500"
                 />
                 

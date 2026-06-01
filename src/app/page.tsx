@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Preloader from "@/components/Preloader";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -9,12 +10,29 @@ import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import WebApps from "@/components/WebApps";
-import Dashboards from "@/components/Dashboards";
-import Certificates from "@/components/Certificates";
-import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ParticleBackground from "@/components/ParticleBackground";
-import DataPlayground from "@/components/DataPlayground";
+
+// Dynamically load heavy client-only/animation-heavy components for dramatic Lighthouse performance gain
+const DataPlayground = dynamic(() => import("@/components/DataPlayground"), {
+  ssr: false,
+  loading: () => <div className="min-h-[300px] flex items-center justify-center text-text-muted font-mono text-xs">Loading Interactive Arena...</div>
+});
+
+const Dashboards = dynamic(() => import("@/components/Dashboards"), {
+  ssr: false,
+  loading: () => <div className="min-h-[250px] flex items-center justify-center text-text-muted font-mono text-xs">Loading Dashboards...</div>
+});
+
+const Certificates = dynamic(() => import("@/components/Certificates"), {
+  ssr: false,
+  loading: () => <div className="min-h-[250px] flex items-center justify-center text-text-muted font-mono text-xs">Loading Credentials...</div>
+});
+
+const Contact = dynamic(() => import("@/components/Contact"), {
+  ssr: false,
+  loading: () => <div className="min-h-[300px] flex items-center justify-center text-text-muted font-mono text-xs">Loading Communications Hub...</div>
+});
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -46,7 +64,7 @@ export default function Home() {
 
           {/* Unified Subtle Particle Background spanning all wrapped sections */}
           <ParticleBackground
-            count={95}
+            count={55}
             speedMultiplier={0.2}
             minSize={0.4}
             maxSize={1.5}

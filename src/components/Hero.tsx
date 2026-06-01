@@ -260,7 +260,7 @@ export default function Hero() {
           {/* Tagline */}
           <div
             ref={subTitleRef}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 text-cyber-cyan text-xs font-semibold tracking-wider uppercase mb-6 w-fit font-heading opacity-0"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 text-cyber-cyan text-xs font-semibold tracking-wider uppercase mb-6 w-fit font-heading"
           >
             <span className="w-2 h-2 rounded-full bg-cyber-cyan animate-pulse"></span>
             Available for Full-time & Projects
@@ -269,7 +269,7 @@ export default function Hero() {
           {/* Headline */}
           <h1
             ref={titleRef}
-            className="text-4xl sm:text-5xl md:text-6xl font-heading font-extrabold tracking-tight text-text-primary leading-[1.1] mb-6 opacity-0"
+            className="text-4xl sm:text-5xl md:text-6xl font-heading font-extrabold tracking-tight text-text-primary leading-[1.1] mb-6"
           >
             Kgs M Luthfi Khailani
             <span className="block mt-2 text-2xl sm:text-3xl md:text-4xl font-semibold text-text-secondary">
@@ -280,7 +280,7 @@ export default function Hero() {
           {/* Description */}
           <p
             ref={descRef}
-            className="text-base sm:text-lg text-text-secondary leading-relaxed mb-8 max-w-xl opacity-0"
+            className="text-base sm:text-lg text-text-secondary leading-relaxed mb-8 max-w-xl"
           >
             Hi, I&apos;m Kgs M Luthfi Khailani, an aspiring Data Analyst currently building my portfolio website. I am passionate about analyzing data, uncovering patterns, and creating visualizations to support data-driven decision making.
           </p>
@@ -290,7 +290,7 @@ export default function Hero() {
             <a
               href="/assets/Kgs M Luthfi Khailani_CV.pdf"
               download="Kgs M Luthfi Khailani_CV.pdf"
-              className="px-6 py-3.5 bg-cyber-cyan hover:bg-cyber-cyan/90 text-navy-950 font-bold rounded shadow-lg shadow-cyber-cyan/10 hover:shadow-cyber-cyan/20 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 text-sm uppercase tracking-wider font-heading opacity-0"
+              className="px-6 py-3.5 bg-cyber-cyan hover:bg-cyber-cyan/90 text-navy-950 font-bold rounded shadow-lg shadow-cyber-cyan/10 hover:shadow-cyber-cyan/20 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 text-sm uppercase tracking-wider font-heading"
             >
               Download CV
               <Download size={16} />
@@ -298,7 +298,7 @@ export default function Hero() {
             
             <button
               onClick={handleContactScroll}
-              className="px-6 py-3.5 bg-transparent hover:bg-navy-800 text-text-primary font-semibold rounded border border-navy-700 hover:border-navy-600 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 text-sm uppercase tracking-wider font-heading opacity-0"
+              className="px-6 py-3.5 bg-transparent hover:bg-navy-800 text-text-primary font-semibold rounded border border-navy-700 hover:border-navy-600 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 text-sm uppercase tracking-wider font-heading"
             >
               Get in Touch
               <ArrowRight size={16} className="text-cyber-cyan" />

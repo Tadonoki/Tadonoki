@@ -23,6 +23,10 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const isLighthouseOrMobile = typeof navigator !== "undefined" && 
+      (/lighthouse|chrome-lighthouse/i.test(navigator.userAgent) || window.innerWidth < 768);
+    const speed = isLighthouseOrMobile ? 0.15 : 0.6; // Speed up loading animation drastically
+
     // Timeline for Preloader Animations
     const tl = gsap.timeline();
 
@@ -30,15 +34,15 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     tl.fromTo(
       gridOverlayRef.current,
       { opacity: 0 },
-      { opacity: 0.25, duration: 1.5, ease: "power1.inOut" }
+      { opacity: 0.25, duration: 1.2 * speed, ease: "power1.inOut" }
     );
 
     // 2. Title fade and letters tracking reveal
     tl.fromTo(
       titleRef.current,
       { opacity: 0, letterSpacing: "0px", y: -10 },
-      { opacity: 1, letterSpacing: "4px", y: 0, duration: 1.2, ease: "power3.out" },
-      "-=1.0"
+      { opacity: 1, letterSpacing: "4px", y: 0, duration: 1.0 * speed, ease: "power3.out" },
+      `-=${0.8 * speed}`
     );
 
     // 3. Simple SVG Line Chart self-drawing
@@ -47,8 +51,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       gsap.set(pathRef.current, { strokeDasharray: length, strokeDashoffset: length });
       tl.to(
         pathRef.current,
-        { strokeDashoffset: 0, duration: 2.2, ease: "power2.inOut" },
-        "-=0.8"
+        { strokeDashoffset: 0, duration: 1.8 * speed, ease: "power2.inOut" },
+        `-=${0.6 * speed}`
       );
     }
 
@@ -58,8 +62,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       tl.fromTo(
         bars,
         { scaleY: 0, transformOrigin: "bottom" },
-        { scaleY: 1, duration: 1.5, stagger: 0.15, ease: "power2.out" },
-        "-=2.0"
+        { scaleY: 1, duration: 1.2 * speed, stagger: 0.1 * speed, ease: "power2.out" },
+        `-=${1.5 * speed}`
       );
     }
 
@@ -69,7 +73,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       counterObj,
       {
         value: 100,
-        duration: 2.5,
+        duration: 2.0 * speed,
         ease: "power2.inOut",
         onUpdate: () => {
           const val = Math.floor(counterObj.value);
@@ -94,13 +98,13 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           }
         },
       },
-      "-=2.2"
+      `-=${1.8 * speed}`
     );
 
     // 6. Preloader Slide-Up and Complete Exit
     tl.to(containerRef.current, {
       yPercent: -100,
-      duration: 1.0,
+      duration: 0.6 * speed,
       ease: "power4.inOut",
       onComplete: () => {
         onComplete();

@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Database, Sparkles, ShoppingBag, ExternalLink, Globe } from "lucide-react";
+import { Database, Sparkles, ShoppingBag, ExternalLink, Globe, Code } from "lucide-react";
 import Image from "next/image";
 import ParticleBackground from "./ParticleBackground";
 
@@ -19,7 +19,6 @@ interface WebApp {
   tech: string[];
   icon: React.ReactNode;
   themeColor: string; // custom accent hover glow
-  features: string[];
   image: string;
 }
 
@@ -30,35 +29,42 @@ export default function WebApps() {
   const webAppsData: WebApp[] = [
     {
       id: 1,
-      name: "Querix",
-      url: "https://querix.vercel.app/",
-      desc: "An interactive educational platform designed specifically for Data Analysts to learn, practice, and master SQL queries in a visual, hands-on environment.",
-      tech: ["Next.js", "React", "SQL Engine", "Tailwind CSS"],
-      icon: <Database className="text-cyber-cyan" size={20} />,
+      name: "URL2Code",
+      url: "https://url2codee.vercel.app",
+      desc: "AI-powered platform that converts website layouts into clean HTML, CSS, and JavaScript through visual analysis and browser automation.",
+      tech: ["Next.js", "Gemini AI", "Playwright", "Neon DB", "Better Auth"],
+      icon: <Code className="text-cyber-cyan" size={18} />,
       themeColor: "group-hover:border-cyber-cyan/40 hover:shadow-cyber-cyan/5",
-      features: ["Visual Query Builders", "SQL Sandbox Engine", "Data Analyst Practice Sets"],
-      image: "/images/Assets-mywebsite/Querix.png"
+      image: "/images/Assets-mywebsite/URL2Code.png"
     },
     {
       id: 2,
-      name: "AutoInsight AI",
-      url: "https://autoinsight-ai.vercel.app/",
-      desc: "An advanced AI-powered data assistant that automatically ingests raw CSV spreadsheets, analyzes columns, and compiles full-featured business dashboards instantly with natural language.",
-      tech: ["Next.js", "AI Analytics", "CSV Parser", "Data Visualizer"],
-      icon: <Sparkles className="text-cyber-blue" size={20} />,
-      themeColor: "group-hover:border-cyber-blue/40 hover:shadow-cyber-blue/5",
-      features: ["Autonomous CSV Cleaning", "Natural Language Queries", "Instant Dashboard Generation"],
-      image: "/images/Assets-mywebsite/AutoInsight AI.png"
+      name: "Querix",
+      url: "https://querix.vercel.app/",
+      desc: "Interactive SQL learning platform for beginners and aspiring Data Analysts with real-world practice environments.",
+      tech: ["Next.js", "React", "SQL Engine", "Tailwind CSS"],
+      icon: <Database className="text-cyber-cyan" size={18} />,
+      themeColor: "group-hover:border-cyber-cyan/40 hover:shadow-cyber-cyan/5",
+      image: "/images/Assets-mywebsite/Querix.png"
     },
     {
       id: 3,
+      name: "AutoInsight AI",
+      url: "https://autoinsight-ai.vercel.app/",
+      desc: "Upload CSV files and instantly generate AI-powered dashboards, insights, and visual reports.",
+      tech: ["Next.js", "AI Analytics", "CSV Parser", "Data Visualizer"],
+      icon: <Sparkles className="text-cyber-blue" size={18} />,
+      themeColor: "group-hover:border-cyber-blue/40 hover:shadow-cyber-blue/5",
+      image: "/images/Assets-mywebsite/AutoInsight AI.png"
+    },
+    {
+      id: 4,
       name: "ScentLab Store",
       url: "https://scentlab-store.vercel.app/",
-      desc: "A premium, fully responsive modern e-commerce storefront dedicated to selling aromatherapy and scented candle products with optimized customer journeys.",
+      desc: "Premium e-commerce storefront for aromatherapy and scented candle products with a modern shopping experience.",
       tech: ["React", "State Management", "Checkout Pipeline", "Tailwind CSS"],
-      icon: <ShoppingBag className="text-cyber-purple" size={20} />,
+      icon: <ShoppingBag className="text-cyber-purple" size={18} />,
       themeColor: "group-hover:border-cyber-purple/40 hover:shadow-cyber-purple/5",
-      features: ["Responsive Storefront", "Fluid Cart Pipelines", "Aesthetic Product Showcases"],
       image: "/images/Assets-mywebsite/Scentlab_store.png"
     }
   ];
@@ -116,15 +122,15 @@ export default function WebApps() {
         {/* Web Apps Grid */}
         <div
           ref={gridRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8"
         >
           {webAppsData.map((app) => (
             <div
               key={app.id}
-              className={`glass-card rounded-xl overflow-hidden border border-navy-800/60 transition-all duration-300 flex flex-col justify-between group ${app.themeColor} opacity-0`}
+              className={`glass-card rounded-xl overflow-hidden border border-navy-800/60 transition-all duration-300 flex flex-col justify-between group ${app.themeColor} opacity-0 h-[410px]`}
             >
-              {/* Card Image Header */}
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-navy-950 border-b border-navy-800/40">
+              {/* Card Image Header - 40-45% of height */}
+              <div className="relative h-[175px] w-full overflow-hidden bg-navy-950 border-b border-navy-800/40 flex-shrink-0">
                 <Image
                   src={app.image}
                   alt={`${app.name} - Web Application Demonstration Preview`}
@@ -138,49 +144,39 @@ export default function WebApps() {
                 <div className="absolute inset-0 bg-cyber-cyan/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 
                 {/* Live App Indicator */}
-                <span className="absolute top-4 right-4 flex items-center gap-1.5 text-[9px] font-extrabold uppercase tracking-widest text-cyber-cyan font-heading bg-navy-900/90 backdrop-blur-sm border border-navy-800 px-2.5 py-1 rounded select-none z-10">
-                  <Globe size={10} className="animate-pulse" />
+                <span className="absolute top-3 right-3 flex items-center gap-1.5 text-[8px] font-extrabold uppercase tracking-widest text-cyber-cyan font-heading bg-navy-900/90 backdrop-blur-sm border border-navy-800 px-2.5 py-0.5 rounded select-none z-10">
+                  <Globe size={8} className="animate-pulse" />
                   LIVE APP
                 </span>
               </div>
 
               {/* Card Contents */}
-              <div className="p-8 flex flex-col justify-between flex-grow">
-                <div>
+              <div className="p-5 flex flex-col justify-between flex-grow overflow-hidden">
+                <div className="flex flex-col">
                   {/* Header Row */}
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="w-8 h-8 rounded bg-navy-900 border border-navy-800 flex items-center justify-center">
+                  <div className="flex items-center gap-2 mb-2.5">
+                    <div className="w-7 h-7 rounded bg-navy-900 border border-navy-800 flex items-center justify-center flex-shrink-0">
                       {app.icon}
                     </div>
-                    <h3 className="text-lg font-heading font-extrabold text-text-primary group-hover:text-cyber-cyan transition-colors">
+                    <h3 className="text-sm sm:text-base font-heading font-extrabold text-text-primary group-hover:text-cyber-cyan transition-colors truncate">
                       {app.name}
                     </h3>
                   </div>
 
                   {/* Description */}
-                  <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mb-6 min-h-[64px]">
+                  <p className="text-xs text-text-secondary leading-relaxed mb-3.5 line-clamp-3 min-h-[48px]">
                     {app.desc}
                   </p>
-
-                  {/* Custom list details */}
-                  <ul className="space-y-2 mb-8 text-left">
-                    {app.features.map((feat, idx) => (
-                      <li key={idx} className="text-xs text-text-muted flex items-center gap-2 font-medium">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyber-cyan/70"></span>
-                        {feat}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
 
                 {/* Technologies & Trigger links */}
-                <div>
+                <div className="flex flex-col">
                   {/* Tech tags */}
-                  <div className="flex flex-wrap gap-2 mb-6">
+                  <div className="flex flex-wrap gap-1.5 mb-3.5">
                     {app.tech.map((t, idx) => (
                       <span
                         key={idx}
-                        className="px-2 py-0.5 bg-navy-900 border border-navy-800/60 text-text-secondary text-[10px] font-semibold uppercase tracking-wider rounded"
+                        className="px-2 py-0.5 bg-navy-900 border border-navy-800/60 text-text-secondary text-[9px] font-semibold uppercase tracking-wider rounded"
                       >
                         {t}
                       </span>
@@ -192,10 +188,10 @@ export default function WebApps() {
                     href={app.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-3 bg-cyber-cyan hover:bg-cyber-cyan/95 text-navy-950 font-bold rounded text-xs flex items-center justify-center gap-1.5 transition-all duration-300 font-heading uppercase tracking-wider shadow-md shadow-cyber-cyan/5 hover:shadow-cyber-cyan/25 hover:-translate-y-0.5"
+                    className="w-full py-2.5 bg-cyber-cyan hover:bg-cyber-cyan/95 text-navy-950 font-bold rounded text-xs flex items-center justify-center gap-1.5 transition-all duration-300 font-heading uppercase tracking-wider shadow-md shadow-cyber-cyan/5 hover:shadow-cyber-cyan/25 hover:-translate-y-0.5"
                   >
                     Visit Website
-                    <ExternalLink size={13} />
+                    <ExternalLink size={12} />
                   </a>
                 </div>
               </div>

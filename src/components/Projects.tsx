@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BookOpen, Presentation, Database, BarChart3, Filter, LineChart, ChevronDown, ChevronUp } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
+import Image from "next/image";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -229,9 +230,12 @@ export default function Projects() {
             >
               {/* Project Image Frame */}
               <div className="relative aspect-[16/9] w-full overflow-hidden bg-navy-950 border-b border-navy-800/40">
-                <img
+                <Image
                   src={proj.image}
                   alt={proj.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                  loading="lazy"
                   className="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-cyber-cyan/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>

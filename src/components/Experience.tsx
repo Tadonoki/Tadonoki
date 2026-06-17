@@ -65,7 +65,7 @@ export default function Experience() {
     const ctx = gsap.context(() => {
       if (isMobile) {
         // Mobile: Bypass all ScrollTriggers completely for instant, lag-free load
-        if (activeLineRef.current) gsap.set(activeLineRef.current, { height: "100%" });
+        if (activeLineRef.current) gsap.set(activeLineRef.current, { height: "100%", scaleY: 1 });
         if (timelineRef.current) {
           const cards = timelineRef.current.querySelectorAll(".timeline-card-wrapper");
           const imgWrappers = timelineRef.current.querySelectorAll(".timeline-img-wrapper");
@@ -78,13 +78,14 @@ export default function Experience() {
           gsap.set(imgs, { clipPath: "inset(0 0% 0 0)", scale: 1 });
         }
       } else {
-        // Desktop: High performance timeline growing scroll line
+        // Desktop: High performance timeline growing scroll line (uses scaleY to prevent forced reflow)
         if (activeLineRef.current && timelineRef.current) {
+          gsap.set(activeLineRef.current, { height: "100%", transformOrigin: "top" });
           gsap.fromTo(
             activeLineRef.current,
-            { height: "0%" },
+            { scaleY: 0 },
             {
-              height: "100%",
+              scaleY: 1,
               ease: "none",
               scrollTrigger: {
                 trigger: timelineRef.current,

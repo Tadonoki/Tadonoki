@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Send, CheckCircle2, MessageSquare, ExternalLink } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
+import Image from "next/image";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -338,9 +339,12 @@ export default function Contact() {
                 >
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-lg bg-navy-950/60 p-2 flex items-center justify-center border border-navy-800/40">
-                      <img
+                      <Image
                         src={soc.img}
                         alt={`${soc.name} Connection logo`}
+                        width={32}
+                        height={32}
+                        loading="lazy"
                         className="w-full h-full object-contain filter group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>

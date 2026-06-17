@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Terminal, Database, LineChart, PieChart, FileSpreadsheet, Percent, BarChart, ChevronDown, ChevronUp } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
+import Image from "next/image";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -123,7 +124,7 @@ export default function Skills() {
           gsap.set(cards, { opacity: 1, scale: 1, y: 0 });
           progressBars.forEach((bar) => {
             const val = bar.getAttribute("data-value") || "0%";
-            gsap.set(bar, { width: val });
+            gsap.set(bar, { width: val, scaleX: 1 });
           });
         } else {
           // Desktop: run high-performance transform-only animations on ScrollTrigger
@@ -147,11 +148,12 @@ export default function Skills() {
 
           progressBars.forEach((bar) => {
             const val = bar.getAttribute("data-value") || "0%";
+            gsap.set(bar, { width: val, transformOrigin: "left" });
             gsap.fromTo(
               bar,
-              { width: "0%" },
+              { scaleX: 0 },
               {
-                width: val,
+                scaleX: 1,
                 duration: 1.2,
                 ease: "power2.out",
                 scrollTrigger: {
@@ -198,9 +200,12 @@ export default function Skills() {
                   key={idx}
                   className="w-24 md:w-32 h-12 flex justify-center items-center opacity-65 hover:opacity-100 hover:scale-105 transition-all duration-300"
                 >
-                  <img
+                  <Image
                     src={logo.src}
                     alt={logo.alt}
+                    width={112}
+                    height={40}
+                    loading="lazy"
                     className="max-h-full max-w-full object-contain filter brightness-90 contrast-110"
                   />
                 </div>

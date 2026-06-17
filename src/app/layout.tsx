@@ -15,10 +15,36 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Luthfi | My Portfolio",
-  description: "Portfolio of Kgs M Luthfi Khailani, a Data Analyst passionate about uncovering patterns, data cleaning, dashboarding, and business intelligence.",
-  keywords: ["Data Analyst", "Power BI", "SQL", "Looker Studio", "Python", "Business Intelligence", "Portfolio"],
+  metadataBase: new URL("https://lutfi-portofolio.vercel.app"),
+  title: "Kgs M Luthfi Khailani | Data Analyst Portfolio",
+  description: "Portfolio of Kgs M Luthfi Khailani, a Data Analyst passionate about data wrangling, analytics, business intelligence dashboards, and visual storytelling.",
+  keywords: ["Data Analyst", "Power BI", "SQL", "Looker Studio", "Python", "Business Intelligence", "Portfolio", "Luthfi Khailani"],
   authors: [{ name: "Kgs M Luthfi Khailani" }],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Kgs M Luthfi Khailani | Data Analyst Portfolio",
+    description: "Portfolio of Kgs M Luthfi Khailani, a Data Analyst passionate about data wrangling, analytics, business intelligence dashboards, and visual storytelling.",
+    url: "https://lutfi-portofolio.vercel.app",
+    siteName: "Luthfi Khailani Portfolio",
+    images: [
+      {
+        url: "/icon.png",
+        width: 512,
+        height: 512,
+        alt: "Kgs M Luthfi Khailani Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Kgs M Luthfi Khailani | Data Analyst Portfolio",
+    description: "Portfolio of Kgs M Luthfi Khailani, a Data Analyst passionate about data wrangling, analytics, business intelligence dashboards, and visual storytelling.",
+    images: ["/icon.png"],
+  },
   icons: {
     icon: "/icon.png",
   },

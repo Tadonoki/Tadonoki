@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { BookOpen, Presentation, Database, BarChart3, Filter, LineChart, ChevronDown, ChevronUp } from "lucide-react";
+import { BookOpen, Presentation, Database, BarChart3, Filter, LineChart, ChevronDown, ChevronUp, Code } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
 import Image from "next/image";
 
@@ -14,13 +14,14 @@ if (typeof window !== "undefined") {
 interface Project {
   id: number;
   title: string;
-  category: "Python" | "Power BI" | "Looker" | "Excel";
+  category: string | string[];
   tags: string[];
   image: string;
   desc: string;
   stats: string[];
   articleUrl: string;
   slidesUrl: string | null;
+  sourceUrl?: string | null;
 }
 
 export default function Projects() {
@@ -30,6 +31,18 @@ export default function Projects() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const projectsData: Project[] = [
+    {
+      id: 9,
+      title: "Customer Shopping Behavior Analysis Using Python, PostgreSQL, SQL, and Power BI",
+      category: ["Python", "PostgreSQL", "SQL", "Power BI"],
+      tags: ["Python", "PostgreSQL", "SQL", "Power BI"],
+      image: "/images/assets/PROJECTBARU.png",
+      desc: "Conducted an end-to-end customer shopping behavior analysis using Python for data cleaning and feature engineering, PostgreSQL for database management, SQL for business analysis, and Power BI to build an interactive dashboard. The project delivers actionable insights into customer segments, purchasing behavior, product performance, subscription trends, and business recommendations.",
+      stats: ["1 Report", "3,900+ Records"],
+      articleUrl: "https://medium.com/@khailanilupi2005/customer-shopping-behavior-analysis-using-python-postgresql-sql-and-power-bi-f07d41ba4312?sharedUserId=khailanilupi2005",
+      slidesUrl: "https://drive.google.com/drive/folders/14svyw62qkOlUpVS1uGomwxigVN3sDtrM?usp=sharing",
+      sourceUrl: "https://github.com/Tadonoki/customer-shopping-behavior-analysis"
+    },
     {
       id: 1,
       title: "Analisis Kinerja Penjualan iPhone SE 2022 di Indonesia (2023–2025) dengan menggunakan Power BI",
@@ -123,7 +136,11 @@ export default function Projects() {
   // Apply filters
   const filteredProjects = filter === "All"
     ? projectsData
-    : projectsData.filter(proj => proj.category === filter);
+    : projectsData.filter(proj => 
+        Array.isArray(proj.category) 
+          ? proj.category.includes(filter) 
+          : proj.category === filter
+      );
 
   // Apply default limit (4) unless expanded
   const visibleProjects = showAll ? filteredProjects : filteredProjects.slice(0, 4);
@@ -174,7 +191,7 @@ export default function Projects() {
     setShowAll(false);
   }, [filter]);
 
-  const categories = ["All", "Python", "Power BI", "Looker", "Excel"];
+  const categories = ["All", "Python", "Power BI", "PostgreSQL", "SQL", "Looker", "Excel"];
 
   return (
     <section
@@ -226,7 +243,7 @@ export default function Projects() {
           {visibleProjects.map((proj) => (
             <div
               key={proj.id}
-              className="glass-card rounded-xl overflow-hidden flex flex-col justify-between group"
+              className="glass-card rounded-xl overflow-hidden flex flex-col justify-between group hover:border-cyber-cyan/30 hover:shadow-[0_20px_40px_-15px_rgba(2,6,23,0.8),_0_0_20px_-3px_rgba(100,255,218,0.1)] hover:-translate-y-1.5 transition-all duration-500"
             >
               {/* Project Image Frame */}
               <div className="relative aspect-[16/9] w-full overflow-hidden bg-navy-950 border-b border-navy-800/40">
@@ -236,14 +253,14 @@ export default function Projects() {
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                   loading="lazy"
-                  className="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-500"
+                  className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-cyber-cyan/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
 
                 {/* Tech Badge */}
                 <span className="absolute top-4 right-4 px-3 py-1 bg-navy-900/90 backdrop-blur-md border border-navy-800 text-cyber-cyan text-[10px] font-bold uppercase tracking-wider rounded flex items-center gap-1.5 z-10">
                   <LineChart size={10} className="text-cyber-cyan animate-pulse" />
-                  {proj.category}
+                  {Array.isArray(proj.category) ? proj.category.join(" • ") : proj.category}
                 </span>
               </div>
 
@@ -298,6 +315,17 @@ export default function Projects() {
                       <BookOpen size={14} />
                       Read Article
                     </a>
+                    {proj.sourceUrl && (
+                      <a
+                        href={proj.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2.5 bg-navy-800 hover:bg-navy-700 text-text-primary border border-navy-700 hover:border-navy-600 font-semibold rounded text-xs flex items-center gap-1.5 transition-all duration-300 font-heading uppercase tracking-wider"
+                      >
+                        <Code size={14} className="text-cyber-cyan" />
+                        View Source
+                      </a>
+                    )}
                     {proj.slidesUrl && (
                       <a
                         href={proj.slidesUrl}

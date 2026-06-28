@@ -312,8 +312,8 @@ export default function Hero() {
           {/* Buttons */}
           <div ref={btnGroupRef} className="flex flex-row flex-wrap sm:flex-nowrap gap-3 sm:gap-4 items-center w-full sm:w-auto">
             <a
-              href="/assets/Kgs M Luthfi Khailani_CV.pdf"
-              download="Kgs M Luthfi Khailani_CV.pdf"
+              href="/assets/Kgs Muhammad Luthfi Khailani-CV.pdf"
+              download="Kgs Muhammad Luthfi Khailani-CV.pdf"
               className="px-4 py-3 sm:px-6 sm:py-3.5 bg-cyber-cyan hover:bg-cyber-cyan/90 text-navy-950 font-bold rounded shadow-lg shadow-cyber-cyan/10 hover:shadow-cyber-cyan/20 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 text-xs sm:text-sm uppercase tracking-wider font-heading flex-1 sm:flex-none"
             >
               Download CV
